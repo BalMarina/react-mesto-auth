@@ -86,8 +86,4 @@ function Main(props) {
   );
 }
 
-// ReactDOM.render((
-
-// ), document.querySelector())
-
 export default Main;

@@ -16,9 +16,6 @@ function Card(props) {
                 onClick={handleClick} />
             <button
                 className="element__trash-button"
-            // style={{ backgroundImage: `url(../images/trash-button.png)` }}
-            //  src={"<%=require('../images/trash-button.png')%>"}
-            // alt="Удалить карточку"
             />
             <div className="element__container">
                 <h2 className="element__name">{card.name}</h2>

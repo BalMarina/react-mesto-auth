@@ -15,8 +15,4 @@ function ImagePopup(props) {
   );
 }
 
-// ReactDOM.render((
-
-// ), document.querySelector())
-
 export default ImagePopup;
