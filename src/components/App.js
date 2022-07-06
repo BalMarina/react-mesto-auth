@@ -31,10 +31,10 @@ function App() {
   }
 
   function closeAllPopups() {
-    setEditAvatarPopupOpen()
-    setEditProfilePopupOpen()
-    setAddPlacePopupOpen()
-    setSelectedCard()
+    setEditAvatarPopupOpen(false)
+    setEditProfilePopupOpen(false)
+    setAddPlacePopupOpen(false)
+    setSelectedCard(null)
   }
 
   return (
