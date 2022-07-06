@@ -11,7 +11,7 @@ function Card(props) {
     return (
         <div className="element">
             <img className="element__pic"
-                alt=""
+                alt={card.name}
                 src={card.link}
                 onClick={handleClick} />
             <button
