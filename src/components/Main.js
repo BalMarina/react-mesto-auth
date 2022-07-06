@@ -11,36 +11,17 @@ function Main(props) {
   const [cards, setCards] = React.useState([])
 
   React.useEffect(() => {
-    api.getCards()
+    Promise.all([
+      api.getUser(),
+      api.getCards()
+    ])
       .then((data) => {
-        setCards(data)
-
+        setUserName(data[0].name)
+        setUserDescription(data[0].about)
+        setUserAvatar(data[0].avatar)
+        setCards(data[1])
       })
   }, [])
-
-  React.useEffect(() => {
-    api.getUser()
-      .then((data) => {
-        setUserName(data.name)
-        setUserDescription(data.about)
-        setUserAvatar(data.avatar)
-      })
-  }, [])
-
-  // function handleEditAvatarClick() {
-  //   const popupAvatar = document.querySelector('.popup-avatar')
-  //   popupAvatar.classList.add('popup_opened')
-  // }
-
-  // function handleEditProfileClick() {
-  //   const popupProfile = document.querySelector('.popup-profile')
-  //   popupProfile.classList.add('popup_opened')
-  // }
-
-  // function handleAddPlaceClick() {
-  //   const popupPlaceCard = document.querySelector('.popup-card')
-  //   popupPlaceCard.classList.add('popup_opened')
-  // }
 
   return (
     <main>
