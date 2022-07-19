@@ -19,13 +19,25 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
   const [selectedCard, setSelectedCard] = React.useState(null)
   const [currentUser, setCurrentUser] = React.useState({})
-
   const [cards, setCards] = React.useState([])
+
+  React.useEffect(() => {
+    api.getUser()
+      .then(data => {
+        setCurrentUser(data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }, [])
 
   React.useEffect(() => {
     api.getCards()
       .then((data) => {
         setCards(data)
+      })
+      .catch(err => {
+        console.log(err);
       })
   }, [])
 
@@ -36,7 +48,10 @@ function App() {
       .then((likedCard) => {
         setCards((state) =>
           state.map((c) => c._id === card._id ? likedCard : c));
-      });
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   function handleCardDelete(card) {
@@ -44,18 +59,11 @@ function App() {
       .then(() => {
         setCards((state) =>
           state.filter((c) => c._id !== card._id));
-      });
-  }
-
-  React.useEffect(() => {
-    api.getUser()
-      .then(data => {
-        setCurrentUser(data);
       })
       .catch(err => {
         console.log(err);
       })
-  }, []);
+  }
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true)
@@ -113,7 +121,6 @@ function App() {
       })
   }
 
-
   return (
     <CurrentUserContext.Provider value={{ currentUser }}>
       <div className={"page"}>
@@ -141,96 +148,7 @@ function App() {
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddNewPlace={handleAddNewPlace} />
-        {/* <PopupWithForm
-          name={'profile'}
-          title={'Редактировать профиль'}
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          buttonText={"Сохранить"}
-          children={
-            <fieldset className="popup__content">
-              <input
-                required=""
-                type="text"
-                className="popup__text popup__input"
-                defaultValue=""
-                id="popup-name"
-                name="popup-name"
-                placeholder="Имя"
-                minLength={2}
-                maxLength={30}
-                autoComplete="off"
-              />
-              <span className="popup__error" id="popup-name_type_error" />
-              <input
-                required=""
-                type="text"
-                className="popup__text popup__input"
-                defaultValue=""
-                id="popup-job"
-                name="popup-job"
-                placeholder="О себе"
-                minLength={2}
-                maxLength={200}
-                autoComplete="off"
-              />
-              <span className="popup__error" id="popup-job_type_error" />
-            </fieldset>
-          } /> */}
 
-        {/* <PopupWithForm
-          name={'card'}
-          title={'Новое место'}
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          buttonText={"Создать"}
-          children={
-            <fieldset className="popup__content">
-              <input
-                required=""
-                type="text"
-                className="popup__text popup__input"
-                defaultValue=""
-                id="card-name"
-                name="name"
-                placeholder="Название"
-                minLength={2}
-                maxLength={30}
-                autoComplete="off"
-              />
-              <span className="popup__error" id="card-name_type_error" />
-              <input
-                required=""
-                type="url"
-                className="popup__text popup__input"
-                defaultValue=""
-                id="card-pic"
-                name="pic"
-                placeholder="Ссылка на картинку"
-              />
-              <span className="popup__error" id="card-pic_type_error" />
-            </fieldset>
-          } /> */}
-        {/* <PopupWithForm
-          name={'avatar'}
-          title={'Обновить аватар'}
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          buttonText={"Обновить"}
-          children={
-            <fieldset className="popup__content">
-              <input
-                required=""
-                type="url"
-                className="popup__text popup__input"
-                defaultValue=""
-                id="avatar"
-                name="avatar"
-                placeholder="Ссылка на картинку"
-              />
-              <span className="popup__error" id="avatar_type_error" />
-            </fieldset>
-          } /> */}
         <PopupWithForm
           name={'confirm'}
           title={'Вы уверены?'}

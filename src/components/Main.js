@@ -1,50 +1,10 @@
 import React from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import '../index.css';
-import api from '../utils/api';
 import Card from './Card';
 
 function Main(props) {
-  // const [cards, setCards] = React.useState([])
   const { currentUser } = React.useContext(CurrentUserContext)
-
-  // React.useEffect(() => {
-  //   Promise.all([
-  //     api.getUser(),
-
-  //   ])
-  //     .then((data) => {
-  //       setName(data[0].name)
-  //       setDescription(data[0].about)
-  //       setAvatar(data[0].avatar)
-  //       setCards(data[1])
-  //     })
-  // }, [])
-
-  // React.useEffect(() => {
-  //   api.getCards()
-  //     .then((data) => {
-  //       setCards(data)
-  //     })
-  // }, [])
-
-  // function handleCardLike(card) {
-  //   const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-  //   api.changeLikeCardStatus(card._id, !isLiked)
-  //     .then((likedCard) => {
-  //       setCards((state) =>
-  //         state.map((c) => c._id === card._id ? likedCard : c));
-  //     });
-  // }
-
-  // function handleCardDelete(card) {
-  //   api.deleteCard(card._id)
-  //     .then(() => {
-  //       setCards((state) =>
-  //         state.filter((c) => c._id !== card._id));
-  //     });
-  // }
 
   return (
     <main>
