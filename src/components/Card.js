@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import '../index.css';
 
 function Card(props) {
     const card = props.card
+    const { currentUser } = useContext(CurrentUserContext);
+    const isOwn = card.owner._id === currentUser._id;
+    const cardDeleteButtonClassName = (
+        `element__trash-button ${isOwn ? '' : 'element__trash-button_hidden'}`
+    );
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const cardLikeButtonClassName = (
+        `element__like ${isLiked ? 'element__like_active' : ''}`
+    );
 
     function handleClick() {
         props.onCardClick(card);
+    }
+
+    function handleLikeClick() {
+        props.onCardLike(card);
+    }
+
+    function handleDeleteClick() {
+        props.onCardDelete(card);
     }
 
     return (
@@ -15,12 +33,18 @@ function Card(props) {
                 src={card.link}
                 onClick={handleClick} />
             <button
-                className="element__trash-button"
+                className={cardDeleteButtonClassName}
+                onClick={handleDeleteClick}
             />
             <div className="element__container">
                 <h2 className="element__name">{card.name}</h2>
-                <button aria-label="Нравится" className="element__like" type="button"></button>
-                <span className="element__likes-counter">0</span>
+                <button
+                    onClick={handleLikeClick}
+                    aria-label="Нравится"
+                    className={cardLikeButtonClassName}
+                    type="button">
+                </button>
+                <span className="element__likes-counter">{card.likes.length}</span>
             </div>
         </div>
     )

@@ -1,27 +1,50 @@
 import React from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import '../index.css';
 import api from '../utils/api';
 import Card from './Card';
 
 function Main(props) {
+  // const [cards, setCards] = React.useState([])
+  const { currentUser } = React.useContext(CurrentUserContext)
 
-  const [userName, setUserName] = React.useState('')
-  const [userDescription, setUserDescription] = React.useState('')
-  const [userAvatar, setUserAvatar] = React.useState('')
-  const [cards, setCards] = React.useState([])
+  // React.useEffect(() => {
+  //   Promise.all([
+  //     api.getUser(),
 
-  React.useEffect(() => {
-    Promise.all([
-      api.getUser(),
-      api.getCards()
-    ])
-      .then((data) => {
-        setUserName(data[0].name)
-        setUserDescription(data[0].about)
-        setUserAvatar(data[0].avatar)
-        setCards(data[1])
-      })
-  }, [])
+  //   ])
+  //     .then((data) => {
+  //       setName(data[0].name)
+  //       setDescription(data[0].about)
+  //       setAvatar(data[0].avatar)
+  //       setCards(data[1])
+  //     })
+  // }, [])
+
+  // React.useEffect(() => {
+  //   api.getCards()
+  //     .then((data) => {
+  //       setCards(data)
+  //     })
+  // }, [])
+
+  // function handleCardLike(card) {
+  //   const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+  //   api.changeLikeCardStatus(card._id, !isLiked)
+  //     .then((likedCard) => {
+  //       setCards((state) =>
+  //         state.map((c) => c._id === card._id ? likedCard : c));
+  //     });
+  // }
+
+  // function handleCardDelete(card) {
+  //   api.deleteCard(card._id)
+  //     .then(() => {
+  //       setCards((state) =>
+  //         state.filter((c) => c._id !== card._id));
+  //     });
+  // }
 
   return (
     <main>
@@ -35,14 +58,14 @@ function Main(props) {
           />
           <img
             className="profile__avatar"
-            src={userAvatar}
+            src={currentUser.avatar}
             alt="Аватар профиля"
           />
         </div>
         <div className="profile__edit-container">
           <div className="profile__text">
             <div className="profile__name-wrapper">
-              <h1 className="profile__name">{userName}</h1>
+              <h1 className="profile__name">{currentUser.name}</h1>
               <button
                 onClick={props.onEditProfile}
                 aria-label="Редактировать профиль"
@@ -50,7 +73,7 @@ function Main(props) {
                 type="button"
               />
             </div>
-            <p className="profile__description">{userDescription}</p>
+            <p className="profile__description">{currentUser.about}</p>
           </div>
         </div>
         <button
@@ -61,7 +84,13 @@ function Main(props) {
         />
       </section>
       <section className="elements">
-        {cards.map((card) => <Card key={card._id} card={card} onCardClick={props.onCardClick} />)}
+        {props.cards.map((card) => <Card
+          key={card._id}
+          card={card}
+          onCardClick={props.onCardClick}
+          onCardLike={props.onCardLike}
+          onCardDelete={props.onCardDelete}
+        />)}
       </section>
     </main>
   );

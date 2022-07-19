@@ -8,7 +8,8 @@ function PopupWithForm(props) {
           <form
             name={`${props.name}-form`}
             className={"popup__form"}
-            noValidate="">
+            noValidate=""
+            onSubmit={props.onSubmit}>
             <button
               className={"popup__close-icon"}
               type="button"
@@ -18,7 +19,6 @@ function PopupWithForm(props) {
             <button
               className={"popup__submit"}
               type="submit"
-              disabled
             >{props.buttonText}
             </button>
           </form>
