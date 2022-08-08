@@ -33,7 +33,6 @@ function App() {
 
   const [isInfoTooltip, setInfoTooltip] = React.useState({ isOpen: false, successful: false });
 
-  // const history = React.useNavigate()
   let navigate = useNavigate();
 
   function tokenCheck() {
@@ -55,48 +54,66 @@ function App() {
   React.useEffect(() => {
     if (loggedIn === true) {
       navigate('/')
+      api.getUser()
+        .then(data => {
+          setCurrentUser(data);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+
+      api.getCards()
+        .then((data) => {
+          // handleLogged()
+          setCards(data)
+        })
+        .catch(err => {
+          console.log(err);
+        })
     }
   }, [loggedIn])
 
-  React.useEffect(() => {
-    api.getUser()
-      .then(data => {
-        setCurrentUser(data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }, [])
+  // React.useEffect(() => {
+  //   api.getUser()
+  //     .then(data => {
+  //       setCurrentUser(data);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  // }, [])
 
-  React.useEffect(() => {
-    api.getCards()
-      .then((data) => {
-        // handleLogged()
-        setCards(data)
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }, [])
+  // React.useEffect(() => {
+  //   api.getCards()
+  //     .then((data) => {
+  //       // handleLogged()
+  //       setCards(data)
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     })
+  // }, [])
 
   function handleLogged() {
     setLoggedIn(true)
   }
 
-  // useEffect(() => {
-  //   console.log(loggedIn)
-  // }, [loggedIn])
-
   function handleRegister(password, email) {
     auth.register(password, email)
       .then(data => {
-        handleInfoTooltip({ successful: true });
-        navigate('/sign-in')
+        if (data) {
+          navigate('/sign-in')
+          handleInfoTooltip(true);
+        } else {
+          handleInfoTooltip(false);
+        }
+        // handleInfoTooltip({ successful: true });
+        // navigate('/sign-in')
         //  history('/sign-in');
       })
       .catch(err => {
         console.log(err);
-        handleInfoTooltip({ successful: false });
+        handleInfoTooltip(false);
       })
   }
 
@@ -113,14 +130,12 @@ function App() {
       .catch(err => {
         //  handleInfoTooltip({ isOpen: true, successful: false });
         console.log(err);
-        handleInfoTooltip({ successful: false });
+        handleInfoTooltip(false);
       })
   }
 
-  function handleInfoTooltip(result) {
-    setInfoTooltip({
-      ...isInfoTooltip, isOpen: true, successful: result
-    });
+  function handleInfoTooltip(successful) {
+    setInfoTooltip(currentIsInfoTooltip => ({ ...currentIsInfoTooltip, isOpen: true, successful }));
   }
 
   function handleCardLike(card) {
@@ -212,11 +227,16 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={{ currentUser }}>
-      <div className={"page"}>
+      <div className={'page'}>
         <Header
           email={email}
           loggedIn={loggedIn}
-          onSignOut={handleSignOut} />
+          onSignOut={handleSignOut}
+        // buttonTitle={loggedIn
+        //   ? 'Выйти'
+        //   : null
+        // }
+        />
         <Routes>
           <Route
             path='/'
@@ -230,20 +250,20 @@ function App() {
               cards={cards}
               onCardLike={handleCardLike}
               onCardDelete={handleCardDelete}
-              path="/" />
+              path='/' />
             }
           />
-          <Route path='/sign-in' element={loggedIn ? <Navigate to="/" /> : <Login onLogin={handleLogin} />} />
+          <Route path='/sign-in' element={loggedIn ? <Navigate to='/' /> : <Login onLogin={handleLogin} />} />
           <Route path='/sign-up' element={<Register onRegister={handleRegister} />} />
           {/* <Route exact path='/' element={loggedIn
-              ? <Navigate to="/" />
-              : <Navigate to="/sign-in" />}
+              ? <Navigate to='/' />
+              : <Navigate to='/sign-in' />}
             /> */}
         </Routes>
 
         {/* <Footer /> */}
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-        <InfoTooltip result={isInfoTooltip} onClose={closeAllPopups} />
+        <InfoTooltip isOpen={isInfoTooltip?.isOpen} successful={isInfoTooltip?.successful} onClose={closeAllPopups} />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
@@ -260,9 +280,9 @@ function App() {
         <PopupWithForm
           name={'confirm'}
           title={'Вы уверены?'}
-          buttonText={"Да"}
+          buttonText={'Да'}
           children={
-            <fieldset className="popup__content">
+            <fieldset className='popup__content'>
             </fieldset>
           } />
       </div>

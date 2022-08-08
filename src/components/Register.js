@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import * as auth from '../utils/auth.js';
+import { Link } from 'react-router-dom';
 import '../index.css';
 
 function Register(props) {
@@ -26,26 +25,20 @@ function Register(props) {
     }
 
     return (
-        <div className="auth">
-            <p className="auth__head">
+        <div className='auth'>
+            <p className='auth__head'>
                 Регистрация
             </p>
-            <form onSubmit={handleSubmit} className="auth__form">
-                {/* <label htmlFor="email">
-                    Логин:
-                </label> */}
-                <input placeholder='Логин' className="auth__input" required id="email" name="email" type="text" value={email} onChange={handleEmail} />
-                {/* <label htmlFor="password">
-                    Пароль:
-                </label> */}
-                <input placeholder='Пароль' className="auth__input" required id="password" name="password" type="password" value={password} onChange={handlePasword} />
-                <button className="auth__submit" type="submit" onSubmit={handleSubmit}>Зарегистрироваться</button>
+            <form onSubmit={handleSubmit} className='auth__form'>
+                <input placeholder='Логин' className='auth__input' required id='email' name='email' type='text' value={email} onChange={handleEmail} />
+                <input placeholder='Пароль' className='auth__input' required id='password' name='password' type='password' value={password} onChange={handlePasword} />
+                <button className='auth__submit' type='submit' onSubmit={handleSubmit}>Зарегистрироваться</button>
+                <div className='auth__redirection-text'>
+                    <p>Уже зарегистрированы?
+                        <Link to='/sign-in' className='auth__link'> Войти</Link>
+                    </p>
+                </div>
             </form>
-
-            <div className="auth__redirection-text">
-                <p>Уже зарегистрированы? Войти</p>
-                <Link to="/register" className="auth__redirection-text_link">Войти</Link>
-            </div>
         </div>
     )
 }
