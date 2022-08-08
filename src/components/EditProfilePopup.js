@@ -9,8 +9,8 @@ export default function EditProfilePopup(props) {
     const [description, setDescription] = React.useState('');
 
     React.useEffect(() => {
-        setName(currentUser.name);
-        setDescription(currentUser.about);
+        setName(currentUser.name || '');
+        setDescription(currentUser.about || '');
     }, [currentUser]);
 
     function handleSubmit(e) {
@@ -40,7 +40,6 @@ export default function EditProfilePopup(props) {
                         required=""
                         type="text"
                         className="popup__text popup__input"
-                        defaultValue=""
                         id="popup-name"
                         name="popup-name"
                         placeholder="Имя"
@@ -55,7 +54,6 @@ export default function EditProfilePopup(props) {
                         required=""
                         type="text"
                         className="popup__text popup__input"
-                        defaultValue=""
                         id="popup-job"
                         name="popup-job"
                         placeholder="О себе"
