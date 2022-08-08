@@ -31,21 +31,9 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [email, setEmail] = React.useState('');
 
-  const [isInfoTooltip, setInfoTooltip] = React.useState({ isOpen: false, successful: false });
+  const [infoTooltip, setInfoTooltip] = React.useState({ isOpen: false, successful: false });
 
   let navigate = useNavigate();
-
-  function tokenCheck() {
-    const jwt = localStorage.getItem('jwt')
-    if (jwt) {
-      auth.getContent(jwt).then((res) => {
-        if (res) {
-          setEmail(res.data.email)
-          setLoggedIn(true)
-        }
-      })
-    }
-  }
 
   React.useEffect(() => {
     tokenCheck()
@@ -64,7 +52,6 @@ function App() {
 
       api.getCards()
         .then((data) => {
-          // handleLogged()
           setCards(data)
         })
         .catch(err => {
@@ -73,26 +60,17 @@ function App() {
     }
   }, [loggedIn])
 
-  // React.useEffect(() => {
-  //   api.getUser()
-  //     .then(data => {
-  //       setCurrentUser(data);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // }, [])
-
-  // React.useEffect(() => {
-  //   api.getCards()
-  //     .then((data) => {
-  //       // handleLogged()
-  //       setCards(data)
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     })
-  // }, [])
+  function tokenCheck() {
+    const jwt = localStorage.getItem('jwt')
+    if (jwt) {
+      auth.getContent(jwt).then((res) => {
+        if (res) {
+          setEmail(res.data.email)
+          setLoggedIn(true)
+        }
+      })
+    }
+  }
 
   function handleLogged() {
     setLoggedIn(true)
@@ -107,9 +85,6 @@ function App() {
         } else {
           handleInfoTooltip(false);
         }
-        // handleInfoTooltip({ successful: true });
-        // navigate('/sign-in')
-        //  history('/sign-in');
       })
       .catch(err => {
         console.log(err);
@@ -124,18 +99,15 @@ function App() {
         localStorage.setItem('jwt', token)
         setEmail(email);
         handleLogged();
-        //  handleInfoTooltip({ isOpen: true, successful: true });
-        // history('/');
       })
       .catch(err => {
-        //  handleInfoTooltip({ isOpen: true, successful: false });
         console.log(err);
         handleInfoTooltip(false);
       })
   }
 
   function handleInfoTooltip(successful) {
-    setInfoTooltip(currentIsInfoTooltip => ({ ...currentIsInfoTooltip, isOpen: true, successful }));
+    setInfoTooltip({ isOpen: true, successful });
   }
 
   function handleCardLike(card) {
@@ -232,10 +204,6 @@ function App() {
           email={email}
           loggedIn={loggedIn}
           onSignOut={handleSignOut}
-        // buttonTitle={loggedIn
-        //   ? 'Выйти'
-        //   : null
-        // }
         />
         <Routes>
           <Route
@@ -253,17 +221,18 @@ function App() {
               path='/' />
             }
           />
-          <Route path='/sign-in' element={loggedIn ? <Navigate to='/' /> : <Login onLogin={handleLogin} />} />
-          <Route path='/sign-up' element={<Register onRegister={handleRegister} />} />
-          {/* <Route exact path='/' element={loggedIn
+          <Route path='/sign-in' element={
+            loggedIn
               ? <Navigate to='/' />
-              : <Navigate to='/sign-in' />}
-            /> */}
+              : <Login onLogin={handleLogin} />
+          } />
+          <Route path='/sign-up' element={<Register onRegister={handleRegister} />} />
         </Routes>
-
-        {/* <Footer /> */}
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-        <InfoTooltip isOpen={isInfoTooltip?.isOpen} successful={isInfoTooltip?.successful} onClose={closeAllPopups} />
+        <InfoTooltip
+          isOpen={infoTooltip?.isOpen}
+          successful={infoTooltip?.successful}
+          onClose={closeAllPopups} />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
