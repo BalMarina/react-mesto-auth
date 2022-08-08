@@ -2,7 +2,6 @@
     height: 50px;
     background-color: #FFFFFF;
     color: #000000;
-    margin-top: 218px;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -10,7 +9,7 @@
     width: 100%;
     border-radius: 2px;
     cursor: pointer;
-
+    margin-top: 200px;
 }
 
 .auth__submit:hover {
@@ -19,9 +18,9 @@
 
 @media (max-width: 767px) {
     .auth__submit {
-        margin-top: 175px;
         font-size: 14px;
         line-height: 17px;
         text-align: center;
+        margin-top: 170px;
     }
 }
