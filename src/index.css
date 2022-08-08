@@ -3,6 +3,9 @@
 @import url(./blocks/page/page.css);
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
+@import url(./blocks/header/__menu/header__menu.css);
+@import url(./blocks/header/__link/header__link.css);
+@import url(./blocks/header/__link/_logined/header__link_logined.css);
 @import url(./blocks/profile/profile.css);
 @import url(./blocks/profile/__changing-avatar/profile__changing-avatar.css);
 @import url(./blocks/profile/__avatar/profile__avatar.css);
@@ -41,3 +44,10 @@
 @import url(./blocks/popup-pic/__content/popup-pic__content.css);
 @import url(./blocks/popup-pic/__photo/popup-pic__photo.css);
 @import url(./blocks/popup-pic/__alt/popup-pic__alt.css);
+@import url(./blocks/popup/__result-icon/popup__result-icon.css);
+@import url(./blocks/popup/__head/_infotooltip/popup__head_infotooltip.css);
+@import url(./blocks/auth/auth.css);
+@import url(./blocks/auth/__input/auth__input.css);
+@import url(./blocks/auth/__form/auth__form.css);
+@import url(./blocks/auth/__header/auth__head.css);
+@import url(./blocks/auth/__submit/auth__submit.css);
