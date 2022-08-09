@@ -15,7 +15,6 @@ export const register = (password, email) => {
         body: JSON.stringify({ password, email })
     })
         .then((res) => checkStatus(res))
-        .catch((err) => console.log(err));
 };
 
 export const login = (password, email) => {
@@ -25,7 +24,6 @@ export const login = (password, email) => {
         body: JSON.stringify({ password, email })
     })
         .then((res) => checkStatus(res))
-        .catch((err) => console.log(err));
 };
 
 export const getContent = (token) => {
