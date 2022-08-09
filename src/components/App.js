@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
-import '../index.css';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -33,7 +32,7 @@ function App() {
 
   const [infoTooltip, setInfoTooltip] = React.useState({ isOpen: false, successful: false });
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     tokenCheck()
