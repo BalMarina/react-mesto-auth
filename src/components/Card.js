@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import '../index.css';
 
 function Card(props) {
     const card = props.card
